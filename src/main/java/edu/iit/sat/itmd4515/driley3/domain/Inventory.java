@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.iit.sat.itmd4515.driley3;
+package edu.iit.sat.itmd4515.driley3.domain;
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -18,6 +18,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 /**
  *
@@ -40,13 +41,14 @@ public class Inventory {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(unique = true)
+    @NotNull(message = "The address cannot be null")
     private String address;
     private String type;
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateEntered;
     @Transient
     private Integer size;
-    @Min(2)
+    @Min(1000)//A thousand dollar minimum
     private float price;
 
     /**
@@ -79,19 +81,14 @@ public class Inventory {
         this.size = size;
     }
 
-    public Inventory(String address, String type, Integer size) {
+    public Inventory(String address, String type, Date dateEntered, Integer size, float price) {
         this.address = address;
         this.type = type;
+        this.dateEntered = dateEntered;
         this.size = size;
+        this.price = price;
     }
 
-    public Inventory(Long id, String address, String type, Integer size) {
-        this.id = id;
-        this.address = address;
-        this.type = type;
-        //this.dateEntered = dateEntered;
-        this.size = size;
-    }
 
     /**
      * Get the value of size

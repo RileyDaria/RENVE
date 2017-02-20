@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.iit.sat.itmd4515.driley3;
+package edu.iit.sat.itmd4515.driley3.domain;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,7 +16,7 @@ import javax.persistence.OneToOne;
  * @author Daria
  */
 @Entity
-public class REAgent {
+public class Buyer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,10 +24,24 @@ public class REAgent {
     private String firstName;
     private String lastName;
     
-    
     @OneToOne
     private Inventory inventory;
+
+    @Override
+    public String toString() {
+        return "Buyer{" + "firstName=" + firstName + ", lastName=" + lastName + '}';
+    }
+
     
+
+    
+    public Inventory getInventory() {
+        return inventory;
+    }
+
+    public void setInventory(Inventory inventory) {
+        this.inventory = inventory;
+    }
 
     public Long getId() {
         return id;
@@ -53,16 +67,7 @@ public class REAgent {
         this.lastName = lastName;
     }
 
-    public Inventory getInventory() {
-        return inventory;
-    }
-
-    public void setInventory(Inventory inventory) {
-        this.inventory = inventory;
-    }
-
-
-    public REAgent() {
+    public Buyer() {
     }
 
 }
