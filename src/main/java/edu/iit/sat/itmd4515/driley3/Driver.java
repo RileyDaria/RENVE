@@ -5,6 +5,8 @@
  */
 package edu.iit.sat.itmd4515.driley3;
 
+import edu.iit.sat.itmd4515.driley3.domain.Inventory;
+import edu.iit.sat.itmd4515.driley3.domain.Seller;
 import java.util.Date;
 import java.util.logging.Logger;
 import javax.persistence.EntityManager;
@@ -26,22 +28,24 @@ public class Driver {
     public static void main(String[] args) {
         // TODO code application logic here
 
-//        EntityManagerFactory emf = Persistence.createEntityManagerFactory("itmd4515PU");
-//        EntityManager em = emf.createEntityManager();
-//        EntityTransaction tx = em.getTransaction();
-//        
-//        Inventory i1 = new Inventory("888 S State Street","residential",new Date(),20);
-//        
-//        tx.begin();
-//        em.persist(i1);
-//        tx.commit();
-//        
-//        i1 = em.createNamedQuery("Inventory.findByAddress", Inventory.class).getSingleResult();
-//        
-//        System.out.println("######### " + i1.getAddress());
-//        
-//        em.close();
-//        emf.close();
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("itmd4515PU");
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction tx = em.getTransaction();
+        
+        Inventory i1 = new Inventory("8777 SN Michigan Street","residential",new Date(),20, 80000);
+        Seller s1 = new Seller("Bob", "Johnson");
+        
+        tx.begin();
+        em.persist(i1);
+        em.persist(s1);
+        tx.commit();
+        
+        i1 = em.createNamedQuery("Inventory.findByAddress", Inventory.class).getSingleResult();
+        
+        System.out.println("######### " + i1.getAddress());
+        
+        em.close();
+        emf.close();
   }
 
 }

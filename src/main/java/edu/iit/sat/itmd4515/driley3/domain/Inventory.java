@@ -13,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -50,6 +51,17 @@ public class Inventory {
     private Integer size;
     @Min(1000)//A thousand dollar minimum
     private float price;
+    
+    @OneToOne(mappedBy ="inventory")
+    private Seller seller;
+
+    public Seller getSeller() {
+        return seller;
+    }
+
+    public void setSeller(Seller seller) {
+        this.seller = seller;
+    }
 
     /**
      * Get the value of price

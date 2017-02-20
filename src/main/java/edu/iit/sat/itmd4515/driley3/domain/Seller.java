@@ -11,12 +11,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 /**
  *
  * @author Daria
  */
 @Entity
+@Table(name = "seller")
 public class Seller {
 
     @Id
@@ -28,9 +30,9 @@ public class Seller {
     @OneToOne
     private Inventory inventory;
 
-    @Override
-    public String toString() {
-        return "Seller{" + "firstName=" + firstName + ", lastName=" + lastName + '}';
+    public Seller(String firstName, String lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
     }
 
     public Long getId() {
