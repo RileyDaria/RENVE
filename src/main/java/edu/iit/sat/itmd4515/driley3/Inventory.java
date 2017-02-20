@@ -17,6 +17,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
+import javax.validation.constraints.Min;
 
 /**
  *
@@ -25,7 +26,8 @@ import javax.persistence.Transient;
 @Entity
 @Table(name = "inventory")
 @NamedQueries({
-    @NamedQuery(name = "Inventory.findAll", query = "SELECT i from Inventory i"),
+    @NamedQuery(name = "Inventory.findAll", query = "SELECT i from Inventory i")
+    ,
     @NamedQuery(name = "Inventory.findByAddress", query = "SELECT i from Inventory i where i.address = :address")
 })
 public class Inventory {
@@ -44,6 +46,26 @@ public class Inventory {
     private Date dateEntered;
     @Transient
     private Integer size;
+    @Min(2)
+    private float price;
+
+    /**
+     * Get the value of price
+     *
+     * @return the value of price
+     */
+    public float getPrice() {
+        return price;
+    }
+
+    /**
+     * Set the value of price
+     *
+     * @param price new value of price
+     */
+    public void setPrice(float price) {
+        this.price = price;
+    }
 
     @Override
     public String toString() {
