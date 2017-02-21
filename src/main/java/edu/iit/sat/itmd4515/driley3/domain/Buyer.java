@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 /**
@@ -23,18 +24,36 @@ public class Buyer {
     private Long id;
     private String firstName;
     private String lastName;
-    
+    @ManyToOne
+    private REAgent agent;
     @OneToOne
     private Inventory inventory;
+
+    /**
+     * Get the value of agent
+     *
+     * @return the value of agent
+     */
+    public REAgent getAgent() {
+        return agent;
+    }
+
+    /**
+     * Set the value of agent
+     *
+     * @param agent new value of agent
+     */
+    public void setAgent(REAgent agent) {
+        this.agent = agent;
+    }
+
+   
 
     @Override
     public String toString() {
         return "Buyer{" + "firstName=" + firstName + ", lastName=" + lastName + '}';
     }
 
-    
-
-    
     public Inventory getInventory() {
         return inventory;
     }

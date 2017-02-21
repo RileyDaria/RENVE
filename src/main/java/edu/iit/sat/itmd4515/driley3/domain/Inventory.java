@@ -5,12 +5,15 @@
  */
 package edu.iit.sat.itmd4515.driley3.domain;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
@@ -51,9 +54,29 @@ public class Inventory {
     private Integer size;
     @Min(1000)//A thousand dollar minimum
     private float price;
-    
-    @OneToOne(mappedBy ="inventory")
+
+    @OneToOne(mappedBy = "inventory")
     private Seller seller;
+    @ManyToMany(mappedBy = "invetories")
+    private List<REAgent> agents = new ArrayList<>();
+
+    /**
+     * Get the value of agents
+     *
+     * @return the value of agents
+     */
+    public List<REAgent> getAgents() {
+        return agents;
+    }
+
+    /**
+     * Set the value of agents
+     *
+     * @param agents new value of agents
+     */
+    public void setAgents(List<REAgent> agents) {
+        this.agents = agents;
+    }
 
     public Seller getSeller() {
         return seller;
@@ -100,7 +123,6 @@ public class Inventory {
         this.size = size;
         this.price = price;
     }
-
 
     /**
      * Get the value of size
