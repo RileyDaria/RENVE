@@ -52,6 +52,7 @@ public class DemoServlet extends HttpServlet {
             return b;
         } else {
             LOG.info(b.toString());
+            
             return null;
         }
     }
@@ -86,15 +87,19 @@ public class DemoServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        
         Buyer b = buildConductorFromRequestParams(request);
-        Map messages = new HashMap<String, String>();
-        messages.put("firstNameError", "If I had an error on first name, maybe it goes here");
-
-        request.setAttribute("messages", messages);
+        
+        if (b!= null){
         request.setAttribute("buyer", b);
 
         RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/confirmation.jsp");
         dispatcher.forward(request, response);
+        }
+        else{
+            response.sendRedirect("/WEB-INF/views/error.jsp");
+        }
+        
 
     }
 
