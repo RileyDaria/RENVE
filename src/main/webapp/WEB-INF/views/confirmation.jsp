@@ -13,5 +13,6 @@
     </head>
     <body>
         <h1>You have created Buyer! Congratulations!</h1>
+         <h2>${requestScope.buyer.firstName} ${requestScope.buyer.lastName}</h2>
     </body>
 </html>
