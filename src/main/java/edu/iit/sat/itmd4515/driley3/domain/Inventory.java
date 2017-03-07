@@ -5,7 +5,6 @@
  */
 package edu.iit.sat.itmd4515.driley3.domain;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Column;
@@ -13,6 +12,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -57,8 +58,16 @@ public class Inventory {
 
     @OneToOne(mappedBy = "inventory")
     private Seller seller;
-    @ManyToMany(mappedBy = "invetories")
-    private List<REAgent> agents = new ArrayList<>();
+    @ManyToMany
+    @JoinTable(name = "inventories_instuments",
+            joinColumns = @JoinColumn(name="inventory_ID"),
+            inverseJoinColumns = @JoinColumn(name="agent_ID"))
+    private List<REAgent> agents;
+    
+    public void addAgent(REAgent a){
+        this.agents.add(a);
+        a.getInventories().add(this);
+    }
 
     /**
      * Get the value of agents
@@ -76,6 +85,16 @@ public class Inventory {
      */
     public void setAgents(List<REAgent> agents) {
         this.agents = agents;
+    }
+
+
+
+    public Inventory(String address, String type, Date dateEntered, Integer size, float price) {
+        this.address = address;
+        this.type = type;
+        this.dateEntered = dateEntered;
+        this.size = size;
+        this.price = price;
     }
 
     public Seller getSeller() {
@@ -109,20 +128,7 @@ public class Inventory {
         return "Inventory{" + "id=" + id + ", address=" + address + ", type=" + type + ", dateEntered=" + dateEntered + ", size=" + size + '}';
     }
 
-    public Inventory(String address, String type, Date dateEntered, Integer size) {
-        this.address = address;
-        this.type = type;
-        this.dateEntered = dateEntered;
-        this.size = size;
-    }
 
-    public Inventory(String address, String type, Date dateEntered, Integer size, float price) {
-        this.address = address;
-        this.type = type;
-        this.dateEntered = dateEntered;
-        this.size = size;
-        this.price = price;
-    }
 
     /**
      * Get the value of size

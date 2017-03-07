@@ -5,48 +5,35 @@
  */
 package edu.iit.sat.itmd4515.driley3.web;
 
+import edu.iit.sat.itmd4515.driley3.domain.Buyer;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+import java.util.logging.Logger;
+import javax.annotation.Resource;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validator;
 
 /**
  *
  * @author Daria
  */
 @WebServlet(name = "DemoController", urlPatterns = {"/demo"})
-public class DemoController extends HttpServlet {
+public class DemoServlet extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet DemoController</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet DemoController at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
-    }
+    private static final Logger LOG = Logger.getLogger(DemoServlet.class.getName());
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    @Resource
+    private Validator validator;
+
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -55,10 +42,36 @@ public class DemoController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    private Buyer buildConductorFromRequestParams(HttpServletRequest request) {
+        String firstName = request.getParameter("firstName");
+        String lastName = request.getParameter("lastName");
+        Buyer b = new Buyer(firstName, lastName);
+        Set<ConstraintViolation<Buyer>> violations = validator.validate(b);
+        if (violations.isEmpty()) {
+            LOG.info(b.toString());
+            return b;
+        } else {
+            LOG.info(b.toString());
+            return null;
+        }
+    }
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet DemoController</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet DemoController at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
+        }
     }
 
     /**
@@ -72,7 +85,17 @@ public class DemoController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+
+        Buyer b = buildConductorFromRequestParams(request);
+        Map messages = new HashMap<String, String>();
+        messages.put("firstNameError", "If I had an error on first name, maybe it goes here");
+
+        request.setAttribute("messages", messages);
+        request.setAttribute("buyer", b);
+
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/confirmation.jsp");
+        dispatcher.forward(request, response);
+
     }
 
     /**

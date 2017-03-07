@@ -11,10 +11,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import org.hibernate.validator.constraints.NotBlank;
+
 
 /**
  *
@@ -26,35 +26,49 @@ public class REAgent {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotBlank
     private String firstName;
+    @NotBlank
     private String lastName;
     @OneToMany(mappedBy = "agent")
     private List<Buyer> buyers = new ArrayList<>();
-    @ManyToMany
-    @JoinTable(name = "inventory_agents",
-            joinColumns = @JoinColumn(name="agent_id"),
-            inverseJoinColumns = @JoinColumn(name = "inventory_id"))
-    private List<REAgent> invetories = new ArrayList<>();
+    
+    
 
-    /**
-     * Get the value of invetories
-     *
-     * @return the value of invetories
-     */
-    public List<REAgent> getInvetories() {
-        return invetories;
+    public REAgent(String firstName, String lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+    @ManyToMany(mappedBy = "agents")
+    private List<Inventory> inventories = new ArrayList<>();
+    
+   // this method doesnt work for some reason
+    public void addInventory(Inventory i){
+        this.inventories.add(i);
+        i.getAgents().add(this);
     }
 
     /**
-     * Set the value of invetories
+     * Get the value of inventories
      *
-     * @param invetories new value of invetories
+     * @return the value of inventories
      */
-    public void setInvetories(List<REAgent> invetories) {
-        this.invetories = invetories;
+    public List<Inventory> getInventories() {
+        return inventories;
     }
 
+    /**
+     * Set the value of inventories
+     *
+     * @param inventories new value of inventories
+     */
+    public void setInventories(List<Inventory> inventories) {
+        this.inventories = inventories;
+    }
 
+    
+    
+   
     /**
      * Get the value of buyers
      *
@@ -73,7 +87,6 @@ public class REAgent {
         this.buyers = buyers;
     }
 
-    private Inventory inventory;
 
     public Long getId() {
         return id;
@@ -99,15 +112,9 @@ public class REAgent {
         this.lastName = lastName;
     }
 
-    public Inventory getInventory() {
-        return inventory;
-    }
-
-    public void setInventory(Inventory inventory) {
-        this.inventory = inventory;
-    }
-
     public REAgent() {
     }
+
+
 
 }

@@ -12,6 +12,6 @@
         <title>RE Inventory Confirmation</title>
     </head>
     <body>
-        <h1>You have created RE Agent! Congratulations!</h1>
+        <h1>You have created Buyer! Congratulations!</h1>
     </body>
 </html>

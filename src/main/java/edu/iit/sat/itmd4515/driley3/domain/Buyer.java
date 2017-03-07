@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
@@ -25,9 +26,16 @@ public class Buyer {
     private String firstName;
     private String lastName;
     @ManyToOne
+    @JoinColumn(name = "agent_id")
     private REAgent agent;
     @OneToOne
     private Inventory inventory;
+
+    public Buyer(String firstName, String lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+    
 
     /**
      * Get the value of agent

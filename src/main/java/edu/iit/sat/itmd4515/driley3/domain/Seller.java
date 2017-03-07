@@ -67,6 +67,11 @@ public class Seller {
 
     public void setInventory(Inventory inventory) {
         this.inventory = inventory;
+//        inventory.setSeller(this);
+    }
+    public void addInventory (Inventory i){
+        this.inventory = i;
+        i.setSeller(this);
     }
 
     public Seller() {
