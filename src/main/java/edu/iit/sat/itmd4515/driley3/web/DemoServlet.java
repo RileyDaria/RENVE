@@ -89,7 +89,12 @@ public class DemoServlet extends HttpServlet {
 
         
         Buyer b = buildConductorFromRequestParams(request);
+                Map messages = new HashMap<String, String>();
+        messages.put("firstNameError", "If I had an error on first name, maybe it goes here");
         
+        request.setAttribute("messages", messages);
+        
+        //this method deasnt work
         if (b!= null){
         request.setAttribute("buyer", b);
 

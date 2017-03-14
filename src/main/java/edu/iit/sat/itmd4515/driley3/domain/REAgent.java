@@ -5,35 +5,22 @@
  */
 package edu.iit.sat.itmd4515.driley3.domain;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
-import org.hibernate.validator.constraints.NotBlank;
-
 
 /**
  *
  * @author Daria
  */
 @Entity
-public class REAgent {
+public class REAgent extends NamedEntity implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @NotBlank
-    private String firstName;
-    @NotBlank
-    private String lastName;
     @OneToMany(mappedBy = "agent")
     private List<Buyer> buyers = new ArrayList<>();
-    
-    
 
     public REAgent(String firstName, String lastName) {
         this.firstName = firstName;
@@ -41,9 +28,9 @@ public class REAgent {
     }
     @ManyToMany(mappedBy = "agents")
     private List<Inventory> inventories = new ArrayList<>();
-    
-   // this method doesnt work for some reason
-    public void addInventory(Inventory i){
+
+    // this method doesnt work for some reason
+    public void addInventory(Inventory i) {
         this.inventories.add(i);
         i.getAgents().add(this);
     }
@@ -66,9 +53,6 @@ public class REAgent {
         this.inventories = inventories;
     }
 
-    
-    
-   
     /**
      * Get the value of buyers
      *
@@ -87,34 +71,7 @@ public class REAgent {
         this.buyers = buyers;
     }
 
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
     public REAgent() {
     }
-
-
 
 }

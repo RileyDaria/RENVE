@@ -5,6 +5,7 @@
  */
 package edu.iit.sat.itmd4515.driley3.domain;
 
+import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,13 +19,8 @@ import javax.persistence.OneToOne;
  * @author Daria
  */
 @Entity
-public class Buyer {
+public class Buyer extends NamedEntity implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String firstName;
-    private String lastName;
     @ManyToOne
     @JoinColumn(name = "agent_id")
     private REAgent agent;
@@ -35,7 +31,6 @@ public class Buyer {
         this.firstName = firstName;
         this.lastName = lastName;
     }
-    
 
     /**
      * Get the value of agent
@@ -55,8 +50,6 @@ public class Buyer {
         this.agent = agent;
     }
 
-   
-
     @Override
     public String toString() {
         return "Buyer{" + "firstName=" + firstName + ", lastName=" + lastName + '}';
@@ -68,30 +61,6 @@ public class Buyer {
 
     public void setInventory(Inventory inventory) {
         this.inventory = inventory;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
     }
 
     public Buyer() {
