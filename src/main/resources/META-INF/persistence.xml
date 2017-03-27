@@ -7,6 +7,7 @@
       <property name="javax.persistence.schema-generation.database.action" value="create"/>
             <property name="eclipselink.logging.level" value="FINE"/>
       <property name="eclipselink.cache.shared.default" value="false"/>
+      <property name="javax.persistence.sql-load-script-source" value="META-INF/sql/insert.sql"/>
     </properties>
   </persistence-unit>
 </persistence>
