@@ -12,6 +12,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 
 /**
@@ -19,6 +21,9 @@ import javax.persistence.OneToOne;
  * @author Daria
  */
 @Entity
+@NamedQueries(
+        {@NamedQuery(name = "Buyer.findAll",query = "select b from Buyer b")})
+
 public class Buyer extends NamedEntity implements Serializable {
 
     @ManyToOne
@@ -27,6 +32,11 @@ public class Buyer extends NamedEntity implements Serializable {
     @OneToOne
     private Inventory inventory;
 
+    /**
+     *
+     * @param firstName
+     * @param lastName
+     */
     public Buyer(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -55,14 +65,25 @@ public class Buyer extends NamedEntity implements Serializable {
         return "Buyer{" + "firstName=" + firstName + ", lastName=" + lastName + '}';
     }
 
+    /**
+     *
+     * @return
+     */
     public Inventory getInventory() {
         return inventory;
     }
 
+    /**
+     *
+     * @param inventory
+     */
     public void setInventory(Inventory inventory) {
         this.inventory = inventory;
     }
 
+    /**
+     *
+     */
     public Buyer() {
     }
 
