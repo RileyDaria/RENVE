@@ -5,40 +5,29 @@
  */
 package edu.iit.sat.itmd4515.driley3.ejb;
 
-
 import edu.iit.sat.itmd4515.driley3.domain.Buyer;
+import edu.iit.sat.itmd4515.driley3.domain.REAgent;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-
 
 /**
  *
  * @author Daria
  */
 @Stateless
-public class BuyerService {
-
-    @PersistenceContext(unitName = "itmd4515PU")
-    private EntityManager em;
+public class BuyerService extends BaseService<Buyer> {
 
     public BuyerService() {
+        super(Buyer.class);
     }
     
-    public void create(Buyer b){
-        em.persist(b);
+
+    @Override
+    public List<Buyer> findAll() {
+         return getEntityManager().createNamedQuery("Buyer.findAll", Buyer.class).getResultList();
     }
-    public void update(Buyer b){
-        em.merge(b);
-    }
-    public void remove(Buyer b){
-        em.remove(em.merge(b));
-    }
-    public Buyer find(Long id){
-        return em.find(Buyer.class, id);
-    }
-    public List<Buyer> findAll(){
-        return em.createNamedQuery("Buyer.findAll",Buyer.class).getResultList();
-    }
+    
+    
 }
